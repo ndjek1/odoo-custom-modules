@@ -1,0 +1,62 @@
+<odoo>
+    <record id="view_national_id_application_form" model="ir.ui.view">
+        <field name="name">national.id.application.form</field>
+        <field name="model">national.id.application</field>
+        <field name="arch" type="xml">
+            <form string="National ID Application">
+                <header>
+                <button name="move_to_stage1" type="object" string="Move to Stage 1"
+                        invisible="approval_stage != 'draft'"/>
+                <button name="move_to_stage2" type="object" string="Move to Stage 2"
+                        invisible="approval_stage != 'stage1'"/>
+                <button name="approve" type="object" string="Approve"
+                        invisible="approval_stage != 'stage2'"/>
+            </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="dob"/>
+                        <field name="nationality"/>
+                        <field name="address"/>
+                        <field name="email"/>
+                        <field name="approval_stage" readonly="1"/>
+                    </group>
+                    <group>
+                        <!-- Display the uploaded image -->
+                        <field name="picture" widget="image" class="oe_avatar"/>
+                        <!-- Display the LC Reference Letter as a downloadable file -->
+                        <field name="lc_reference_letter" widget="binary" filename="lc_reference_letter"/>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_national_id_application_tree" model="ir.ui.view">
+        <field name="name">national.id.application.tree</field>
+        <field name="model">national.id.application</field>
+        <field name="arch" type="xml">
+            <tree string="National ID Application">
+                <field name="name"/>
+                <field name="dob"/>
+                <field name="nationality"/>
+                <field name="email"/>
+                <field name="approval_stage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_national_id_application" model="ir.actions.act_window">
+        <field name="name">National ID Applications</field>
+        <field name="res_model">national.id.application</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_national_id_application"
+          name="National ID Applications"
+          action="action_national_id_application"
+          sequence="10"/>
+</odoo>

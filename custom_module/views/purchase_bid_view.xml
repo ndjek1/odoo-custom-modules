@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+<!--    &lt;!&ndash; Views for Purchase Bid &ndash;&gt;-->
+<!--    <record id="view_purchase_order_form_inherit" model="ir.ui.view">-->
+<!--      <field name="name">purchase.order.form.inherit</field>-->
+<!--      <field name="model">purchase.order</field>-->
+<!--      <field name="inherit_id" ref="purchase.purchase_order_form"/>-->
+<!--      <field name="arch" type="xml">-->
+<!--        <xpath expr="//sheet/group" position="after">-->
+<!--          <group>-->
+<!--            <field name="bid_ids" context="{'default_purchase_order_id': active_id}"-->
+<!--                   >-->
+<!--              <tree>-->
+<!--                <field name="vendor_id"/>-->
+<!--                <field name="bid_amount"/>-->
+<!--                <field name="delivery_date"/>-->
+<!--                <field name="state"/>-->
+<!--              </tree>-->
+<!--            </field>-->
+<!--          </group>-->
+<!--        </xpath>-->
+<!--      </field>-->
+<!--    </record>-->
+
+    <record id="view_purchase_order_bid_tree" model="ir.ui.view">
+      <field name="name">purchase.order.bid.tree</field>
+      <field name="model">purchase.order.bid</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="vendor_id"/>
+          <field name="bid_amount"/>
+          <field name="delivery_date"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Inherit Purchase Order Form -->
+    <record id="view_purchase_order_bid_form" model="ir.ui.view">
+      <field name="name">purchase.order.bid.form</field>
+      <field name="model">purchase.order.bid</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="purchase_order_id" readonly="1"/>
+              <field name="vendor_id" readonly="1"/>
+              <field name="bid_amount"/>
+              <field name="delivery_date"/>
+              <field name="state" readonly="1"/>
+            </group>
+            <footer>
+              <!-- Replace 'states' with 'invisible' attribute -->
+              <button name="submit_bid" type="object" string="Submit Bid" class="oe_highlight"
+                      invisible="state != 'draft'"/>
+              <button name="accept_bid" type="object" string="Accept Bid" class="oe_highlight"
+                      invisible="state != 'submitted'"/>
+            </footer>
+          </sheet>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

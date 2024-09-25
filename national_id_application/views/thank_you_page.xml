@@ -1,0 +1,10 @@
+<odoo>
+    <template id="thank_you_page" name="National ID Application - Thank You">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Thank You!</h1>
+                <p>Your application has been submitted successfully. We will process your request shortly.</p>
+            </div>
+        </t>
+    </template>
+</odoo>

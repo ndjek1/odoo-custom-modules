@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+    <field name="name">purchase.order.form.multi.vendor</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+        <field name="partner_id" position="after">
+            <field name="custom_field" widget="many2many_tags"/>
+        </field>
+    </field>
+</record>
+
+        <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.tree.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/> <!-- Inherit the existing tree view -->
+            <field name="arch" type="xml">
+                <!-- Use XPath to insert your field after an existing one -->
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="custom_field" string="Vendors"  widget="many2many_tags" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
