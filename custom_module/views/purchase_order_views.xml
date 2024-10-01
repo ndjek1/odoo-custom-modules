@@ -1,27 +1,46 @@
 <odoo>
-    <data>
-        <record id="view_purchase_order_form_inherit" model="ir.ui.view">
-    <field name="name">purchase.order.form.multi.vendor</field>
-    <field name="model">purchase.order</field>
-    <field name="inherit_id" ref="purchase.purchase_order_form"/>
-    <field name="arch" type="xml">
-        <field name="partner_id" position="after">
-            <field name="custom_field" widget="many2many_tags"/>
-        </field>
-    </field>
-</record>
+  <data>
+    <!-- Inherit Purchase Order Form View to Add Bids and Custom Field -->
+    <record id="view_purchase_order_form_inherit_combined" model="ir.ui.view">
+      <field name="name">purchase.order.form.inherit.combined</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
 
-        <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
-            <field name="name">purchase.order.tree.inherit</field>
-            <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/> <!-- Inherit the existing tree view -->
-            <field name="arch" type="xml">
-                <!-- Use XPath to insert your field after an existing one -->
-                <xpath expr="//field[@name='partner_id']" position="replace">
-                    <field name="custom_field" string="Vendors"  widget="many2many_tags" readonly="1"/>
-                </xpath>
+        <!-- Insert the custom_field after partner_id -->
+        <xpath expr="//field[@name='partner_id']" position="after">
+          <field name="custom_field" widget="many2many_tags"/>
+        </xpath>
+
+        <!-- Insert the bids section after the main group -->
+        <xpath expr="//sheet/group" position="after">
+          <group>
+            <field name="bid_ids" context="{'default_purchase_order_id': active_id}">
+              <tree>
+                <field name="vendor_id"/>
+                <field name="bid_amount"/>
+                <field name="delivery_date"/>
+                <field name="state"/>
+              </tree>
             </field>
-        </record>
+          </group>
+        </xpath>
 
-    </data>
+      </field>
+    </record>
+
+    <!-- Inherit the tree view for Purchase Order -->
+    <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+      <field name="name">purchase.order.tree.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/> <!-- Inherit the existing tree view -->
+      <field name="arch" type="xml">
+        <!-- Insert custom field in the tree view after partner_id -->
+        <xpath expr="//field[@name='partner_id']" position="replace">
+          <field name="custom_field" string="Vendors" widget="many2many_tags" readonly="1"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
 </odoo>

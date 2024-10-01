@@ -1,0 +1,36 @@
+<!-- views/purchase_request_views.xml -->
+<odoo>
+    <data>
+        <record id="view_purchase_request_form" model="ir.ui.view">
+    <field name="name">purchase.request.form</field>
+    <field name="model">purchase.request</field>
+    <field name="arch" type="xml">
+        <form string="Purchase Request">
+            <sheet>
+                <group>
+                    <field name="name" readonly="1"/>
+                    <field name="requestor_id" readonly="1"/>
+                    <field name="department_id"/>
+                    <field name="date_request" readonly="1"/>
+                    <field name="date_needed"/>
+                </group>
+                <group>
+                    <field name="item_description"/>
+                    <field name="quantity"/>
+                    <field name="reason"/>
+                    <field name="state" readonly="1"/>
+                    <field name="purchase_order_id" readonly="1"/>
+                </group>
+            </sheet>
+            <footer>
+                <button name="action_submit" string="Submit" type="object" class="btn-primary" states="draft"/>
+                <button name="action_approve" string="Approve" type="object" class="btn-success" states="submitted"/>
+                <button name="action_reject" string="Reject" type="object" class="btn-danger" states="submitted"/>
+                <button name="action_create_rfq" string="Create RFQ" type="object" class="btn-secondary" states="approved"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+    </data>
+</odoo>
